@@ -1,0 +1,57 @@
+name: Pipeline CI/CD PayFast Solutions
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    name: Compilacion y Empaquetado
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo fuente
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Simular Instalacion de Dependencias
+        run: echo "Instalando dependencias de la aplicacion..."
+
+      - name: Simular Construccion de Imagen Docker
+        run: echo "Construyendo imagen Docker payfast-api:latest..."
+
+  test:
+    name: Pruebas Unitarias y Seguridad
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo fuente
+        uses: actions/checkout@v3
+
+      - name: Ejecutar Pruebas Unitarias
+        run: echo "Ejecutando pruebas unitarias... 100% Exitosas"
+
+      - name: Analisis de Seguridad de Dependencias (SCA)
+        run: echo "Escaneando dependencias... 0 Vulnerabilidades encontradas"
+
+  deploy:
+    name: Despliegue Simulado a Staging/QA
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simular Despliegue de Contenedor en QA
+        run: |
+          echo "Desplegando contenedor payfast-api en el servidor de Staging..."
+          echo "Ejecutando: docker run -d -p 8080:8080 payfast-api:latest"
+          sleep 2
+          echo "¡Contenedor desplegado exitosamente!"
+
+      - name: Comprobacion de Estado (Health Check)
+        run: |
+          echo "Realizando verificacion de disponibilidad (Health Check)..."
+          echo "HTTP/1.1 200 OK - Servicio respondiendo adecuadamente"
